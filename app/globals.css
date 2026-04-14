@@ -95,3 +95,59 @@ button, a, input {
   .latest-grid { grid-template-columns: repeat(3, minmax(0,1fr)); }
   .layout-main { grid-template-columns: 2fr 1fr; align-items:start; }
 }
+
+.build-page {
+  padding-top: 20px;
+}
+
+.build-hero h1 {
+  margin: 0;
+  font-size: clamp(1.6rem, 2.6vw, 2.3rem);
+}
+
+.build-eyebrow {
+  color: var(--BrandPrimary);
+  font-weight: 700;
+  margin: 0 0 4px;
+}
+
+.build-hero-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.build-grid {
+  margin-top: 16px;
+  display: grid;
+  gap: 16px;
+}
+
+.build-grid h2 {
+  margin-top: 0;
+  font-size: 1.1rem;
+}
+
+.build-grid ul,
+.checklist {
+  margin: 0;
+  padding-inline-start: 18px;
+}
+
+.checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.checklist input {
+  margin-top: 4px;
+}
+
+@media (min-width: 900px) {
+  .build-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
