@@ -13,7 +13,8 @@ export const ROUTES = {
   support: '/a22',
   terms: '/a23',
   privacy: '/a24',
-  community: '/a25'
+  community: '/a25',
+  build: '/build'
 } as const;
 
 export const MEMBER_ROUTES = new Set<string>(['/notifications', '/create']);
@@ -33,5 +34,6 @@ export const ALLOWED_INTERNAL_HREFS = new Set<string>([
   '/a22',
   '/a23',
   '/a24',
-  '/a25'
+  '/a25',
+  '/build'
 ]);

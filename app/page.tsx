@@ -24,6 +24,7 @@ export default async function HomePage() {
           <Link href={ROUTES.news}>الأخبار</Link>
           <Link href="/tags">الوسوم</Link>
           <Link href={ROUTES.support}>الدعم</Link>
+          <Link href={ROUTES.build}>أوامر البناء</Link>
         </nav>
 
         <div className="actions">
