@@ -3,8 +3,10 @@
 (so motion is never broken by a cut and the parts join seamlessly), each under the size limit, never re-compressed.
 
   python3 tools/render.py <job> --name ACRPS-Bishara [--max 14] [--limit 29500000] [--workers 2]
-  python3 tools/render.py <job> --name ... --only 12,13      re-render only the segments containing these seconds
-                                                              (after a local fix; other segments are reused)
+  python3 tools/render.py <job> --name ... --only 112,121    after a LOCAL fix that did not change the total length:
+                                                              re-render only the parts containing these seconds,
+                                                              keep the previous cuts and reuse every other part
+  (without --only everything is rendered fresh)
 Needs out/timeline.json (tools/cfg2json.mjs) and out/mix.wav (tools/snd.py).
 Output: <job>/out/parts/<name>-partNN-of-MM.mp4 (+ out/full.mp4 joined losslessly, for checking/archiving)."""
 import os, sys, json, math, glob, shutil, argparse, subprocess
@@ -35,8 +37,12 @@ def render_seg(ab):
     subprocess.run([NODE, 'r3.mjs', J, 'video', str(a), str(b), p], cwd=J, env={**os.environ, 'VW': '1080', 'VH': '1350'}, stdout=subprocess.DEVNULL, check=True)
     return p
 
-cuts = plan()
 only = [float(x) for x in o.only.split(',') if x.strip()]
+if only and os.path.exists(f'{OUT}/cuts.txt'):          # local fix: keep the delivered cuts, reuse untouched segments
+    cuts = [float(x) for x in open(f'{OUT}/cuts.txt').read().split()]
+    if abs(cuts[-1] - TOT) > .01: sys.exit('timeline length changed -> run without --only (full render)')
+else:                                                    # full render: never reuse old segments (content may have changed)
+    shutil.rmtree(SEG, ignore_errors=True); os.makedirs(SEG); cuts = plan()
 while True:
     segs = list(zip(cuts[:-1], cuts[1:]))
     todo = [s for s in segs if not os.path.exists(seg_path(*s)) or any(s[0] <= t < s[1] for t in only)]
