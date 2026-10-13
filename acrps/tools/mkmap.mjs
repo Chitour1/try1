@@ -1,7 +1,7 @@
 // World map data for the 'map' component -> <job>/a/map.js
 // node tools/mkmap.mjs <job> spec.json
-// spec: {"origin":{"key":"usa","name":"United States of America","at":[-98,39]},
-//        "targets":[{"key":"can","name":"Canada","at":[-100,57]},{"key":"irn","name":"Iran","at":[54,32.5]}],
+// spec: {"origin":{"key":"o","name":"<Natural Earth name>","at":[lon,lat]},
+//        "targets":[{"key":"a","name":"<name>","at":[lon,lat]},{"key":"b","name":"<name>"}],
 //        "box":[-150,-30,70,78], "rotate":40}
 // names = Natural Earth (world-atlas countries-110m) English names; "at" = [lon,lat] where the dot/arc lands.
 import fs from 'fs'; import path from 'path'; import {fileURLToPath} from 'url'; import {createRequire} from 'module';

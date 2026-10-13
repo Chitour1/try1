@@ -8,7 +8,7 @@ on-screen text only (no narration), with transitions, sound effects and animated
 engine/  comp.html (scene engine + component library), lib.js (HOLD, TIMELINE), r3.mjs (frame renderer)
 tools/   prep.py (job, PDF pages, clips, photos, cover), mkmap.mjs, cfg2json.mjs, snd.py, render.py
 assets/  Bahij fonts, logo, brand textures, film grain, default news-bed music
-example/ cfg.js of the approved Azmi Bishara video (Siyasat Arabiya 82)
+template/ cfg.js — generic template: one scene per component, placeholders only
 BRAND.md the identity notes taken from the Center's designs
 ```
 SFX synthesis is shared with `../muwathaq/fxlib.py`. Setup: `cd acrps && npm i` (needs node ≥18, ffmpeg, poppler-utils, python3 with numpy scipy pillow soundfile pyloudnorm).

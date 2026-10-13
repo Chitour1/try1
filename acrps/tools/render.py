@@ -2,7 +2,7 @@
 """Render an ACRPS study video as delivery parts, each cut BEFORE a scene transition and rendered on its own
 (so motion is never broken by a cut and the parts join seamlessly), each under the size limit, never re-compressed.
 
-  python3 tools/render.py <job> --name ACRPS-Bishara [--max 14] [--limit 29500000] [--workers 2]
+  python3 tools/render.py <job> --name ACRPS-<Author> [--max 14] [--limit 29500000] [--workers 2]
   python3 tools/render.py <job> --name ... --only 112,121    after a LOCAL fix that did not change the total length:
                                                               re-render only the parts containing these seconds,
                                                               keep the previous cuts and reuse every other part
