@@ -11,4 +11,4 @@ assets/  Bahij fonts, logo, brand textures, film grain, default news-bed music
 template/ cfg.js — generic template: one scene per component, placeholders only
 BRAND.md the identity notes taken from the Center's designs
 ```
-SFX synthesis is shared with `../muwathaq/fxlib.py`. Setup: `cd acrps && npm i` (needs node ≥18, ffmpeg, poppler-utils, python3 with numpy scipy pillow soundfile pyloudnorm).
+SFX synthesis: `tools/fxlib.py`. Setup: `cd acrps && npm i` (needs node ≥18, ffmpeg, poppler-utils, python3 with numpy scipy pillow soundfile pyloudnorm).

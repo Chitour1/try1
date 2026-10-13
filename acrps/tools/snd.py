@@ -6,7 +6,7 @@
    beyond that it is looped with a crossfade. Always a 2.8 s fade-out at the end."""
 import sys, os, json, subprocess, numpy as np, soundfile as sf
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(HERE)
-sys.path.insert(0, os.path.join(os.path.dirname(ROOT), 'muwathaq')); from fxlib import *   # shared SFX synth (same repo)
+sys.path.insert(0, HERE); from fxlib import *   # SFX synth, bundled in tools/
 import pyloudnorm as pyln
 from scipy.ndimage import uniform_filter1d
 
