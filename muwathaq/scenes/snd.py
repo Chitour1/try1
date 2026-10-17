@@ -22,6 +22,11 @@ for i, s in enumerate(job['scenes']):
     r = roots[i % len(roots)]; put_stereo(M, pad([r * 2, r * 3, r * 4, r * 5], s['dur'] + .8, .05, 1400), s['start'] - .2)
     if i: B.put(rv(whoosh(.4, False), 1, .3), s['start'] - .45, .35); B.put(rv(drum(.6, 62), 1.2, .3), s['start'], .25)
     if s['type'] == 'bignum': B.put(riser(1.2), s['start'] + .3, .25); B.put(rv(stamp(), .8, .25), s['start'] + 1.5, .35)
+    if s['type'] == 'pair':
+        B.put(riser(1.4), s['start'] + 1.0, .22); B.put(rv(stamp(), .8, .25), s['start'] + 2.5, .4); B.put(rv(note(880, 1.2, .3), 1.5, .4), s['start'] + 2.55, .3)
+        for j in range(2): B.put(rv(whoosh(.45, True), .8, .2), s['start'] + .4 + j * .18, .16)
+    if s['type'] == 'verdict':
+        B.put(rv(whoosh(.4, True), .8, .2), s['start'] + 1.7, .2); B.put(rv(stamp(), .8, .25), s['start'] + 1.95, .5); B.put(riser(1.1), s['start'] + 2.9, .2)
     if s['type'] == 'map': B.put(rv(stamp(), .8, .25), s['start'] + 1.0, .4)
     if s['type'] == 'bars':
         for j in range(len(s['rows'])): B.put(rv(whoosh(.5, True), .8, .2), s['start'] + .6 + j * .55, .18)

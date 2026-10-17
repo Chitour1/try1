@@ -54,6 +54,26 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:var(--bg);font-f
 .qt{font-weight:900;font-size:64px;line-height:1.45;margin-top:10px}
 .qn{font-weight:900;font-size:46px;color:var(--seal);margin-top:34px}
 .qr{font-weight:700;font-size:34px;color:var(--mute);margin-top:8px}
+@font-face{font-family:'Amiri';font-weight:700;src:url('amiri-700.woff2');}
+/* pair: two words with the same count */
+.prw{position:relative;display:flex;direction:rtl;justify-content:space-between;margin-top:46px}
+.pc{width:418px;background:#0f1e31;border-top:10px solid var(--cat);padding:30px 26px 34px;text-align:center}
+.pc .w{font-weight:900;font-size:80px;line-height:1.2;color:#fff}
+.pc .n{font-weight:900;font-size:230px;line-height:1.05;color:#fff;direction:ltr;unicode-bidi:isolate;margin-top:6px}
+.pc .f{font-weight:700;font-size:32px;line-height:1.5;color:var(--mute);margin-top:12px;min-height:88px}
+.eq{position:absolute;left:50%;top:228px;width:118px;height:118px;margin-left:-59px;background:var(--seal);transform:rotate(45deg);display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 12px var(--bg)}
+.eq b{transform:rotate(-45deg);color:var(--ink);font-weight:900;font-size:92px;line-height:1;margin-top:-8px}
+.lnk{height:8px;background:var(--seal);margin-top:26px;transform-origin:right center}
+/* verse inside bignum */
+.vs{font-family:'Amiri';font-weight:700;font-size:58px;line-height:1.85;color:#efe3bd;margin-top:30px}
+.vr{font-weight:700;font-size:30px;color:var(--mute);margin-top:4px}
+/* verdict */
+.clm{position:relative;margin-top:40px;background:#fff;border-right:22px solid #8a96a6;padding:26px 36px 32px;color:var(--ink);font-weight:900;font-size:70px;line-height:1.3}
+.clm .x{position:absolute;right:30px;left:30px;top:52%;height:9px;background:#C8102E;transform-origin:right center}
+.vd{position:absolute;left:10px;top:-150px;border:9px solid #C8102E;color:#C8102E;background:rgba(11,20,32,.92);font-weight:900;font-size:84px;line-height:1;padding:12px 30px 22px}
+.cr2{font-weight:900;font-size:44px;color:#5fc79d;margin-top:96px}
+/* rosette background */
+#bgx{position:absolute;left:-110px;top:310px;width:1300px;height:1300px;opacity:.07}
 /* frame */
 #top{position:absolute;top:196px;right:48px;display:flex;align-items:center;gap:22px;direction:rtl}
 #top .tag{background:var(--cat);color:#fff;font-weight:900;font-size:46px;padding:2px 30px 9px}
@@ -75,6 +95,7 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:var(--bg);font-f
 #grain{position:absolute;inset:0;width:1080px;height:1920px;mix-blend-mode:overlay;opacity:.05;object-fit:cover}
 </style></head><body>
 <div id="st">
+ <svg id="bgx" viewBox="-650 -650 1300 1300" style="display:none"></svg>
  <div id="scenes"></div>
  <div id="cvA"></div><div id="cvB"><img src="mark-ink.png"></div>
  <div id="top"><div class="tag"></div><div class="dt"></div></div>
@@ -99,7 +120,7 @@ const B={
   const im=d.querySelector('.ph img'),b=d.querySelector('.hbox .b'),c=d.querySelector('.hbox>div:last-child');
   return (lt,dur)=>{const z=.5625*1.0*(1+.06*P(lt,0,dur));im.style.transform=`translate(${540-960*z}px,${360-540*z}px) scale(${z})`;fadeUp(b,P(lt,.3,.7),40);stamp(c,P(lt,1.0,1.2))}},
  point(s,d){const hasP=!!s.img;
-  d.innerHTML=(hasP?`<div class="ph"><img src="${s.img}"><div class="cr">${esc(s.credit||'')}</div></div>`:'')+(hasP?'':`<div class="wmk">${s.n}</div>`)+`<div class="area" style="top:${hasP?1050:470}px;bottom:auto"><div class="cnt"><b>${s.n}</b><span>من ${s.of}</span></div><div class="ptt">${esc(s.title)}</div><div class="pbd">${esc(s.body||'')}</div>${s.date?`<div class="pdt">${esc(s.date)}</div>`:''}<div style="margin-top:28px">${s.source?chip(s.source):''}</div></div>`;
+  d.innerHTML=(hasP?`<div class="ph"><img src="${s.img}"><div class="cr">${esc(s.credit||'')}</div></div>`:'')+(hasP||s.nonum?'':`<div class="wmk">${s.n}</div>`)+`<div class="area" style="top:${hasP?1050:470}px;bottom:auto"><div class="cnt"${s.nonum?' style="display:none"':''}><b>${s.n}</b><span>من ${s.of}</span></div><div class="ptt">${esc(s.title)}</div><div class="pbd">${esc(s.body||'')}</div>${s.date?`<div class="pdt">${esc(s.date)}</div>`:''}<div style="margin-top:28px">${s.source?chip(s.source):''}</div></div>`;
   const im=d.querySelector('.ph img'),[cn,tt,bd]=d.querySelectorAll('.cnt,.ptt,.pbd'),dt=d.querySelector('.pdt'),c=d.querySelector('.area>div:last-child');
   return (lt,dur)=>{if(im){const z=.5625*(1+.06*P(lt,0,dur));im.style.transform=`translate(${540-960*z}px,${360-540*z}px) scale(${z})`}
    const wk=d.querySelector('.wmk');if(wk){wk.style.opacity=.07*P(lt,0,.5);wk.style.transform=`translateY(${(1-eOut(P(lt,0,.8)))*80}px)`}stamp(cn,P(lt,.1,.3));fadeUp(tt,P(lt,.35,.7));fadeUp(bd,P(lt,.8,1.2));if(dt)fadeUp(dt,P(lt,1.1,1.4));stamp(c,P(lt,1.4,1.6))}},
@@ -127,10 +148,23 @@ const B={
    const rr=((lt-1.2)%1.4)/1.4;ring.setAttribute('r',lt>1.2?20+60*rr:0);ring.setAttribute('opacity',lt>1.2?1-rr:0);
    pl.style.left=(px*z+tx+30)+'px';pl.style.top=(py*z+ty-110)+'px';stamp(pl,P(lt,1.25,1.45));
    fadeUp(ft,P(lt,1.6,2.0))}},
- bignum(s,d){d.innerHTML=`<div class="area" style="top:470px"><div class="ttl">${esc(s.title||'')}</div><div class="num">0</div><div class="unit">${esc(s.unit||'')}</div><div class="mean">${esc(s.meaning||'')}</div><div style="margin-top:34px">${s.source?chip(s.source):''}</div></div>`;
-  const [t,n,u,m,c]=d.querySelectorAll('.ttl,.num,.unit,.mean,.area>div:last-child');const v=+s.value,dec=(String(s.value).split('.')[1]||'').length;
+ bignum(s,d){const V=s.verse?`<div class="vs">﴿${esc(s.verse)}﴾</div><div class="vr">${esc(s.ref||'')}</div>`:'';
+  d.innerHTML=`<div class="area" style="top:${s.verse?420:470}px"><div class="ttl">${esc(s.title||'')}</div><div class="num" style="font-size:${s.numSize||(s.verse?250:300)}px">0</div><div class="unit">${esc(s.unit||'')}</div><div class="mean">${esc(s.meaning||'')}</div>${V}<div style="margin-top:34px">${s.source?chip(s.source):''}</div></div>`;
+  const [t,n,u,m,c]=d.querySelectorAll('.ttl,.num,.unit,.mean,.area>div:last-child');const vs=d.querySelector('.vs'),vr=d.querySelector('.vr');const v=+s.value,dec=(String(s.value).split('.')[1]||'').length;
   return lt=>{fadeUp(t,P(lt,.1,.4));const q=eOut(P(lt,.3,1.5));n.textContent=s.display&&isNaN(v)?s.display:(s.prefix||'')+(v*q).toFixed(dec)+(s.suffix||'');n.style.opacity=P(lt,.25,.4);
-   fadeUp(u,P(lt,1.3,1.6));fadeUp(m,P(lt,1.7,2.1));stamp(c,P(lt,2.2,2.4))}},
+   fadeUp(u,P(lt,1.3,1.6));fadeUp(m,P(lt,1.7,2.1));const k=vs?.6:0;if(vs){fadeUp(vs,P(lt,2.2,2.7));fadeUp(vr,P(lt,2.5,2.8))}stamp(c,P(lt,2.2+k*1.2,2.4+k*1.2))}},
+ pair(s,d){const[a,b]=s.items;const card=x=>`<div class="pc"><div class="w">${esc(x.word)}</div><div class="n">0</div><div class="f">${esc(x.forms||'')}</div></div>`;
+  d.innerHTML=`<div class="area" style="top:400px"><div class="ttl">${esc(s.title||'')}</div><div class="prw">${card(a)}${card(b)}<div class="eq"><b>=</b></div></div><div class="lnk"></div><div class="mean" style="font-size:42px;margin-top:30px">${esc(s.rule||'')}</div><div style="margin-top:30px">${s.source?chip(s.source):''}</div></div>`;
+  const t=d.querySelector('.ttl'),cs=[...d.querySelectorAll('.pc')],ns=[...d.querySelectorAll('.pc .n')],eq=d.querySelector('.eq'),ln=d.querySelector('.lnk'),r=d.querySelector('.mean'),c=d.querySelector('.area>div:last-child');
+  return lt=>{fadeUp(t,P(lt,.1,.4));cs.forEach((e,i)=>{const q=eOut(P(lt,.4+i*.18,.85+i*.18));e.style.opacity=q;e.style.transform=`translateX(${(1-q)*(i?-160:160)}px)`});
+   const q=eOut(P(lt,.9,2.4));ns.forEach((n,i)=>{const v=s.items[i].value;n.textContent=Math.round(v*q);n.style.color=lt>2.5?'#D4A21B':'#fff'});
+   const qe=P(lt,2.45,2.65);eq.style.opacity=qe>0?1:0;eq.style.transform=`rotate(45deg) scale(${qe<1?1.6-.6*eback(qe):1})`;
+   ln.style.transform=`scaleX(${eIO3(P(lt,2.7,3.2))})`;fadeUp(r,P(lt,3.2,3.6));stamp(c,P(lt,3.8,4.0))}},
+ verdict(s,d){d.innerHTML=`<div class="area" style="top:470px"><span class="kick" style="background:#3E4C5E">${esc(s.kicker||'رقم شائع')}</span><div class="clm">${esc(s.claim)}<div class="x"></div><div class="vd">${esc(s.verdict||'غير صحيح')}</div></div><div class="cr2">${esc(s.fixLabel||'الصحيح')}</div><div class="num" style="font-size:250px;color:#D4A21B">0</div><div class="unit" style="color:#fff;font-size:52px">${esc(s.unit||'')}</div><div class="mean" style="font-size:42px">${esc(s.note||'')}</div><div style="margin-top:30px">${s.source?chip(s.source):''}</div></div>`;
+  const k=d.querySelector('.kick'),cl_=d.querySelector('.clm'),x=d.querySelector('.clm .x'),vd=d.querySelector('.vd'),cr=d.querySelector('.cr2'),n=d.querySelector('.num'),u=d.querySelector('.unit'),m=d.querySelector('.mean'),c=d.querySelector('.area>div:last-child');
+  return lt=>{stamp(k,P(lt,.1,.3));fadeUp(cl_,P(lt,.3,.7),40);x.style.transform=`scaleX(${eIO3(P(lt,1.7,2.1))})`;
+   const qv=P(lt,1.9,2.1);vd.style.opacity=qv>0?1:0;vd.style.transform=`rotate(-7deg) scale(${qv<1?1.8-.8*eback(qv):1})`;
+   fadeUp(cr,P(lt,2.7,3.0));const q=eOut(P(lt,2.9,4.1));n.textContent=Math.round(s.value*q);n.style.opacity=P(lt,2.9,3.05);fadeUp(u,P(lt,3.9,4.2));fadeUp(m,P(lt,4.3,4.7));stamp(c,P(lt,4.9,5.1))}},
  bars(s,d){const mx=Math.max(...s.rows.map(r=>+r.value));
   d.innerHTML=`<div class="area" style="top:420px"><div class="ttl" style="margin-bottom:40px">${esc(s.title||'')}</div>`+s.rows.map(r=>`<div class="row${r.hi?' hi':''}"><div class="lb"><span>${esc(r.label)}</span><b>${esc(r.display||r.value)}</b></div><div class="tr"><div class="bar"></div></div></div>`).join('')+`<div class="mean" style="font-size:44px">${esc(s.note||'')}</div><div style="margin-top:30px">${s.source?chip(s.source):''}</div></div>`;
   const t=d.querySelector('.ttl'),rows=[...d.querySelectorAll('.row')],nt=d.querySelector('.mean'),c=d.querySelector('.area>div:last-child');
@@ -147,7 +181,10 @@ window.__setup=async()=>{
  document.documentElement.style.setProperty('--cat',CFG.color);
  await document.fonts.load('900 80px Bahij');await document.fonts.load('700 80px Bahij');await document.fonts.load('400 80px Bahij');
  $('top').querySelector('.tag').textContent=CFG.label;$('top').querySelector('.dt').textContent=CFG.date||'';$('sting').querySelector('b').textContent=CFG.label;
- S.forEach((s,i)=>{const d=el('div','sc');d.style.display='none';$('scenes').appendChild(d);R.push({d,s,fn:B[s.type](s,d)})});
+ if(CFG.rosette){const g=$('bgx');g.style.display='block';let h='';const star=(R,a0)=>{let p=[];for(let i=0;i<16;i++){const r=i%2?R*.76:R,a=a0+i*Math.PI/8;p.push((r*Math.sin(a)).toFixed(1)+','+(-r*Math.cos(a)).toFixed(1))}return `<polygon points="${p.join(' ')}" fill="none" stroke="#D4A21B" stroke-width="3"/>`};
+  [620,470,330,200].forEach((R,i)=>{h+=star(R,i%2?Math.PI/16:0);h+=`<circle r="${R*.76}" fill="none" stroke="#D4A21B" stroke-width="1.5"/>`});
+  for(let i=0;i<8;i++){const a=i*Math.PI/4;h+=`<line x1="0" y1="0" x2="${(620*Math.sin(a)).toFixed(1)}" y2="${(-620*Math.cos(a)).toFixed(1)}" stroke="#D4A21B" stroke-width="1.2"/>`}g.innerHTML=h}
+ S.forEach((s,i)=>{const d=el('div','sc');d.style.display='none';const dy=s.dy??CFG.dy??0;if(dy)d.style.top=dy+'px';$('scenes').appendChild(d);R.push({d,s,fn:B[s.type](s,d)})});
  const ch=$('chain');const n=S.length;let h=`<line x1="${400-10}" y1="10" x2="${400-10-(n-1)*34}" y2="10" stroke="#3A5674" stroke-width="3"/>`;
  for(let i=0;i<n;i++)h+=`<circle id="cd${i}" cx="${400-10-i*34}" cy="10" r="8" fill="#3A5674"/>`;ch.innerHTML=h;
  await Promise.all([...document.images].map(i=>i.decode().catch(()=>{})));};
@@ -168,6 +205,7 @@ window.__renderAt=async t=>{
   ax=1100*(1-a1)-1100*a2;bx=1100*(1-b1)-1100*b2;});
  $('cvA').style.transform=`translateX(${ax}px)`;$('cvB').style.transform=`translateX(${bx}px)`;
  for(let i=0;i<R.length;i++){const c=document.getElementById('cd'+i);if(c){c.setAttribute('fill',i<=cur?'#D4A21B':'#3A5674');c.setAttribute('r',i===cur?11:8)}}
+ if(CFG.rosette)$('bgx').style.transform=`rotate(${-t*2.2}deg) scale(${1+.04*Math.sin(t*.5)})`;
  const fr=P(t,1.0,1.3);['top','mk','chain','bar'].forEach(id=>$(id).style.opacity=fr);
  const gs='grain'+(Math.floor(t*12)%4)+'.png';const gi=$('grain');if(gi.getAttribute('src')!==gs)gi.src=gs;await gi.decode().catch(()=>{});
 };
